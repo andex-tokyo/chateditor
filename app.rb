@@ -13,7 +13,9 @@ end
 get '/:id/websocket' do
   if request.websocket?
     id = params[:id].to_i
-    settings.sockets[id]  = []
+    if settings.sockets[id].nil?
+      settings.sockets[id]  = []
+    end
     
     request.websocket do |ws|
       ws.onopen do
@@ -21,7 +23,6 @@ get '/:id/websocket' do
       end
       
       ws.onmessage do |msg|
-        binding.pry
         settings.sockets[id].each do |s|
           s.send(msg)
         end
