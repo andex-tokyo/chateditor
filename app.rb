@@ -2,12 +2,17 @@ require 'bundler/setup'
 Bundler.require
 require 'sinatra/reloader' if development?
 require 'sinatra-websocket'
+require "./models"
 
 set :server, 'thin'
 set :sockets, []
 
 get '/:id' do
   erb :index
+end
+
+post '/setid' do
+  binding.pry
 end
 
 get '/:id/websocket' do
